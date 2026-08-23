@@ -69,15 +69,11 @@ public class MainBank {
                     break;
 
                 case 4:
-                    System.out.println("\n--- Account Summary ---");
-
-    if (overdrafted) {
-        account.displayAccount();
-    } else {
-        account.accountSummary();
-    }
-
-    break;
+                    if (overdrafted) {
+                         account.displayAccount();
+                         } else {
+                            account.accountSummary(); }
+                    break;
 
                 case 5:
                     System.out.println("Exiting Bank. Goodbye!");
