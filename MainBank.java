@@ -4,7 +4,7 @@ public class MainBank {
     public static void main(String[] args) {
         Scanner scnr = new Scanner(System.in);
         CheckingAccount account = new CheckingAccount();
-
+        boolean overdrafted = false;
         // Preset account information
         account.setFirstName("Samantha");
         account.setLastName("Fuentes");
@@ -56,6 +56,7 @@ public class MainBank {
 
                         if (overdraftChoice == 'Y' || overdraftChoice == 'y') {
                             System.out.println(account.processWithdrawal(withdrawalAmount));
+                            overdrafted = true;
                             System.out.printf("New balance: $%.2f%n", account.getBalance());
                         } else {
                             System.out.println("Withdrawal cancelled.");
@@ -68,8 +69,15 @@ public class MainBank {
                     break;
 
                 case 4:
-                    account.accountSummary();
-                    break;
+                    System.out.println("\n--- Account Summary ---");
+
+    if (overdrafted) {
+        account.displayAccount();
+    } else {
+        account.accountSummary();
+    }
+
+    break;
 
                 case 5:
                     System.out.println("Exiting Bank. Goodbye!");
