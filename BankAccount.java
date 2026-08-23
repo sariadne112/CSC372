@@ -58,7 +58,7 @@ public class BankAccount {
 
     // Account summary
     public void accountSummary() {
-        System.out.println("\n----- Account Summary -----");
+        System.out.println("\n--- Account Summary ---");
         System.out.println("First Name: " + firstName);
         System.out.println("Last Name: " + lastName);
         System.out.println("Account ID: " + accountID);

@@ -3,8 +3,6 @@ import java.util.Scanner;
 public class MainBank {
     public static void main(String[] args) {
         Scanner scnr = new Scanner(System.in);
-
-        BankAccount account = new BankAccount();
         CheckingAccount account = new CheckingAccount();
 
         // Preset account information
@@ -16,7 +14,7 @@ public class MainBank {
         boolean running = true; //boolean for while loop
 
         while (running) {
-
+//Main Menu
             System.out.println("\n===== WELCOME TO BANKING =====");
             System.out.println("Please choose one option:");
             System.out.println("1. Deposit");
@@ -51,6 +49,7 @@ public class MainBank {
                     } else {
                         System.out.println("You do not have enough funds for this withdrawal."
                         );
+                        //Option to overdraft
                         System.out.println("Continuing will result in a $30 overdraft fee.");
                         System.out.print("Would you like to continue? (Y/N): ");
                         char overdraftChoice = scnr.next().charAt(0);
@@ -69,7 +68,6 @@ public class MainBank {
                     break;
 
                 case 4:
-                    System.out.println("\n--- Account Summary ---");
                     account.accountSummary();
                     break;
 
