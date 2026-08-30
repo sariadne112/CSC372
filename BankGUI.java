@@ -1,17 +1,17 @@
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.security.spec.EdDSAParameterSpec;
-import java.text.NumberFormat;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Dimension;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 
 public class BankGUI extends BankAccount implements ActionListener{
     private static BankAccount account;
@@ -37,235 +37,344 @@ public class BankGUI extends BankAccount implements ActionListener{
     // Balance display
     private static JLabel balanceLabel;
   public static void main(String[] args) {
-      JFrame topFrame = null;                // Application window
-      GridBagConstraints layoutConst = null; // GUI component layout
-      account = new BankAccount();  
-      
-      // Create frame and add components using GridBagLayout
-      topFrame = new JFrame("Bank Account");
-      
-      // Use a GridBagLayout
-      topFrame.setLayout(new GridBagLayout());
+        account = new BankAccount();
+        JFrame topFrame = new JFrame("Bank Account");
 
-      //Set Balance Field
-      accountLabel = new JLabel("Account:");
-      accountLabel.setVisible(true);
-      accountField = new JTextField(20);
-      accountField.setEditable(true);
-      balanceLabel = new JLabel("");
-      balanceLabel.setVisible(false);
+        // JPanel required by assignment
+        JPanel bankPanel = new JPanel(new GridBagLayout());
 
-      
-      //create Enter Button
-      signInButton = new JButton("Sign In");
+        GridBagConstraints layoutConst = new GridBagConstraints();
+        layoutConst.insets = new Insets(10, 10, 10, 10);
 
-      //Create Option Buttons
-      depositButton = new JButton("Deposit");
-      withdrawButton = new JButton("Withdraw");
-      balanceButton = new JButton("View Balance");
-      exitButton = new JButton("Exit");
-      // Create GridBagConstraints
-      layoutConst = new GridBagConstraints();
-    
-      // 10 pixels of padding around component
-      layoutConst.insets = new Insets(10, 10, 10, 10);
-       // Account label
-      layoutConst.gridx = 0;
-      layoutConst.gridy = 0;
-      topFrame.add(accountLabel, layoutConst);
-       // Account text field
-      layoutConst.gridx = 1;
-      layoutConst.gridy = 0;
-      topFrame.add(accountField, layoutConst);
-    // Validation message
+        BankGUI listener = new BankGUI();
+        // Sign in
+        accountLabel = new JLabel("Account:");
+
+        accountField = new JTextField(20);
+        accountField.setEditable(true);
+
+        signInButton = new JButton("Sign In");
+        signInButton.addActionListener(listener);
+
+        validationLabel = new JLabel("");
+
+        // Account label
+        layoutConst.gridx = 0;
+        layoutConst.gridy = 0;
+        bankPanel.add(accountLabel, layoutConst);
+
+        // Account text field
+        layoutConst.gridx = 1;
+        layoutConst.gridy = 0;
+        bankPanel.add(accountField, layoutConst);
+
+        // Validation message
         layoutConst.gridx = 0;
         layoutConst.gridy = 1;
         layoutConst.gridwidth = 2;
-        topFrame.add(validationLabel, layoutConst);
+        bankPanel.add(validationLabel, layoutConst);
+
         layoutConst.gridwidth = 1;
-      layoutConst.gridx = 0;
-      layoutConst.gridy = 2;
-      layoutConst.insets = new Insets(10, 10, 10, 10);
-      topFrame.add(signInButton, layoutConst);
 
-      //buttons lay out
-      layoutConst.gridx = 0;
-      layoutConst.gridy = 3;
-      topFrame.add(depositButton, layoutConst);
+        // Sign in button
+        layoutConst.gridx = 0;
+        layoutConst.gridy = 2;
+        bankPanel.add(signInButton, layoutConst);
 
-      layoutConst.gridx = 1;
-      layoutConst.gridy = 3;
-      topFrame.add(withdrawButton, layoutConst);
+        // MAIN MENU BUTTONS
+        depositButton = new JButton("Deposit");
+        withdrawButton = new JButton("Withdraw");
+        balanceButton = new JButton("Balance");
+        exitButton = new JButton("Exit");
 
-      layoutConst.gridx = 0;
-      layoutConst.gridy = 4;
-      topFrame.add(balanceButton, layoutConst);
-
-      layoutConst.gridx = 0;
-      layoutConst.gridy = 6;
-      topFrame.add(exitButton, layoutConst);
-
-      layoutConst.gridx = 0;
-      layoutConst.gridy = 7;
-      layoutConst.gridwidth = 2;
-      topFrame.add(balanceLabel, layoutConst);
-      layoutConst.gridwidth = 1;
-      balanceLabel.setVisible(false);
-      //returnButton
-      returnButton = new JButton("Return");
-      returnButton = new JButton("Return");
-      returnButton.setVisible(false);
-
-      layoutConst.gridx = 1;
-      layoutConst.gridy = 6;
-      topFrame.add(returnButton, layoutConst);
-
-      depositButton.setVisible(false);
-      withdrawButton.setVisible(false);
-      balanceButton.setVisible(false);
-      exitButton.setVisible(false);
-
-      //action listener buttons
-      BankGUI listener = new BankGUI();
-
-      signInButton.addActionListener(listener);
-      depositButton.addActionListener(listener);
-      withdrawButton.addActionListener(listener);
-      balanceButton.addActionListener(listener);
-      exitButton.addActionListener(listener);
-      returnButton.addActionListener(listener);
-      enterDepositButton.addActionListener(listener);
-      
-      //button size
-      Dimension buttonSize = new Dimension(110, 35);
-        depositButton.setPreferredSize(buttonSize);
-        withdrawButton.setPreferredSize(buttonSize);
-        balanceButton.setPreferredSize(buttonSize);
-        enterDepositButton.setPreferredSize(buttonSize);
-      Dimension smallButtonSize = new Dimension(85, 25);
-        exitButton.setPreferredSize(smallButtonSize);
-        signInButton.setPreferredSize(smallButtonSize);
-        returnButton.setPreferredSize(smallButtonSize);
-
-        //buttons colors
-        Color customBlue = new Color(203, 238, 243);
-        signInButton.setBackground(customBlue);
-        exitButton.setBackground(customBlue);
-        balanceButton.setBackground(customBlue);
-        returnButton.setBackground(customBlue);
-        enterDepositButton.setBackground(customBlue);
-        Color bankPink = new Color(244, 156, 187);
-        depositButton.setBackground(bankPink);
-        withdrawButton.setBackground(bankPink);
-        balanceButton.setBackground(bankPink);
-        
-      //validation label
-      validationLabel = new JLabel("");
-
-      depositLabel = new JLabel("Deposit amount: $");
-
-      amountField = new JFormattedTextField(NumberFormat.getCurrencyInstance());
-        amountField.setColumns(10);
-        amountField.setEditable(true);
+        depositButton.addActionListener(listener);
+        withdrawButton.addActionListener(listener);
+        balanceButton.addActionListener(listener);
+        exitButton.addActionListener(listener);
 
         layoutConst.gridx = 0;
-        layoutConst.gridy = 5;
-        topFrame.add(depositLabel, layoutConst);
+        layoutConst.gridy = 3;
+        bankPanel.add(depositButton, layoutConst);
 
         layoutConst.gridx = 1;
-        layoutConst.gridy = 5;
-        topFrame.add(amountField, layoutConst);
+        layoutConst.gridy = 3;
+        bankPanel.add(withdrawButton, layoutConst);
 
         layoutConst.gridx = 0;
-        layoutConst.gridy = 6;
-        topFrame.add(enterDepositButton, layoutConst);
+        layoutConst.gridy = 4;
+        bankPanel.add(balanceButton, layoutConst);
 
-        depositLabel.setVisible(false);
-        amountField.setVisible(false);
-        enterDepositButton.setVisible(false);
-      
-      //account value
-      accountField.setText(String.valueOf(account.getAccountID()));
-       
-       // Terminate program when window closes
-      topFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      
-      // Resize window to fit components
-      topFrame.pack();
-      topFrame.setSize(500, 500);
-      // Display window
-      topFrame.setVisible(true);
-   }
+        layoutConst.gridx = 1;
+        layoutConst.gridy = 4;
+        bankPanel.add(exitButton, layoutConst);
 
-    public void actionPerformed(ActionEvent event) {
-    if (event.getSource() == signInButton) {
-        int accountID = Integer.parseInt(accountField.getText());
-
-        if (accountID == 42671) {
-            // Hide sign-in section
-            accountField.setVisible(false);
-            accountLabel.setVisible(false);
-            signInButton.setVisible(false);
-
-            account.setAccountID(accountID);
-            validationLabel.setText("Account Signed In.");
-
-            depositButton.setVisible(true);
-            withdrawButton.setVisible(true);
-            balanceButton.setVisible(true);
-            exitButton.setVisible(true);
-            returnButton.setVisible(true);
-
-        }
-        else {
-            validationLabel.setText("Invalid account number.");
-        }
-    }
-
-    else if (event.getSource() == depositButton) {
-        // Show only deposit screen
+        // Hide menu until account is signed in
         depositButton.setVisible(false);
         withdrawButton.setVisible(false);
         balanceButton.setVisible(false);
         exitButton.setVisible(false);
 
-        depositLabel.setVisible(true);
-        amountField.setVisible(true);
-        enterDepositButton.setVisible(true);
-        returnButton.setVisible(true);
-        balanceLabel.setVisible(true);
+        // Transaction
+        transactionLabel = new JLabel("");
+        amountField =
+            new JFormattedTextField(NumberFormat.getCurrencyInstance());
+
+        amountField.setColumns(10);
+        amountField.setEditable(true);
+
+        enterDepositButton = new JButton("Deposit");
+        enterDepositButton.addActionListener(listener);
+
+        enterWithdrawButton = new JButton("Withdraw");
+        enterWithdrawButton.addActionListener(listener);
+
+        returnButton = new JButton("Return");
+        returnButton.addActionListener(listener);
+
+        layoutConst.gridx = 0;
+        layoutConst.gridy = 5;
+        bankPanel.add(transactionLabel, layoutConst);
+
+        layoutConst.gridx = 1;
+        layoutConst.gridy = 5;
+        bankPanel.add(amountField, layoutConst);
+
+        layoutConst.gridx = 0;
+        layoutConst.gridy = 6;
+        bankPanel.add(enterDepositButton, layoutConst);
+
+        layoutConst.gridx = 0;
+        layoutConst.gridy = 6;
+        bankPanel.add(enterWithdrawButton, layoutConst);
+
+        layoutConst.gridx = 1;
+        layoutConst.gridy = 6;
+        bankPanel.add(returnButton, layoutConst);
+
+        // Hide transaction components
+        transactionLabel.setVisible(false);
+        amountField.setVisible(false);
+        enterDepositButton.setVisible(false);
+        enterWithdrawButton.setVisible(false);
+        returnButton.setVisible(false);
+        // Balance Label
+        
+        balanceLabel = new JLabel("");
+
+        layoutConst.gridx = 0;
+        layoutConst.gridy = 7;
+        layoutConst.gridwidth = 2;
+        bankPanel.add(balanceLabel, layoutConst);
+
+        balanceLabel.setVisible(false);
+        // Button appearance
+        Dimension buttonSize = new Dimension(110, 35);
+        depositButton.setPreferredSize(buttonSize);
+        withdrawButton.setPreferredSize(buttonSize);
+        enterWithdrawButton.setPreferredSize(buttonSize);
+
+        Dimension smallButtonSize = new Dimension(85, 25);
+        balanceButton.setPreferredSize(smallButtonSize);
+        exitButton.setPreferredSize(smallButtonSize);
+        signInButton.setPreferredSize(smallButtonSize);
+        returnButton.setPreferredSize(smallButtonSize);
+        enterDepositButton.setPreferredSize(smallButtonSize);
+
+        Color customBlue = new Color(203, 238, 243);
+        Color bankPink = new Color(244, 156, 187);
+
+        signInButton.setBackground(customBlue);
+        exitButton.setBackground(customBlue);
+        balanceButton.setBackground(customBlue);
+        returnButton.setBackground(customBlue);
+        enterDepositButton.setBackground(customBlue);
+        enterWithdrawButton.setBackground(customBlue);
+
+        depositButton.setBackground(bankPink);
+        withdrawButton.setBackground(bankPink);
+        // FRAME SETTINGS
+        
+        topFrame.add(bankPanel);
+
+        topFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        topFrame.setSize(500, 500);
+        topFrame.setLocationRelativeTo(null);
+        topFrame.setVisible(true);
+   }
+
+    @Override
+    public void actionPerformed(ActionEvent event) {
+        // SIGN IN
+        if (event.getSource() == signInButton) {
+
+            try {
+
+                int accountID =
+                    Integer.parseInt(accountField.getText());
+
+                if (accountID == 42671) {
+
+                    account.setAccountID(accountID);
+
+                    // Hide sign-in screen
+                    accountField.setVisible(false);
+                    accountLabel.setVisible(false);
+                    signInButton.setVisible(false);
+
+                    validationLabel.setText(
+                        "Account " + accountID + " Signed In.");
+                    // Show menu
+                    showMainMenu();
+
+                }
+                else {
+                    validationLabel.setText( "Invalid account number.");
+                }
+
+            }
+            catch (NumberFormatException exception) {
+
+                validationLabel.setText( "Please enter a valid account number." );
+            }
+        }
+        // OPEN Deposit screen
+        else if (event.getSource() == depositButton) {
+
+            hideMainMenu();
+
+            transactionLabel.setText("Deposit amount:");
+
+            transactionLabel.setVisible(true);
+            amountField.setVisible(true);
+            enterDepositButton.setVisible(true);
+            returnButton.setVisible(true);
+
+            balanceLabel.setText(
+                String.format( "Current Balance: $%.2f",account.getBalance() ));
+
+            balanceLabel.setVisible(true);
+        }
+
+        // PROCESS Deposit
+
+        else if (event.getSource() == enterDepositButton) {
+
+            Number value = (Number) amountField.getValue();
+
+            if (value != null) {
+
+                double amount = value.doubleValue();
+
+                System.out.println(
+                    account.deposit(amount)
+                );
+
+                balanceLabel.setText(
+                    String.format("Current Balance: $%.2f",account.getBalance()));
+
+                amountField.setValue(null);
+            }
+            else {
+
+                balanceLabel.setText(
+                    "Please enter a deposit amount."
+                );
+            }
+        }
+        // OPEN WITHDRAW screen
+        else if (event.getSource() == withdrawButton) {
+
+            hideMainMenu();
+
+            transactionLabel.setText("Withdrawal amount:");
+
+            transactionLabel.setVisible(true);
+            amountField.setVisible(true);
+            enterWithdrawButton.setVisible(true);
+            returnButton.setVisible(true);
+
+            balanceLabel.setText(
+                String.format(
+                    "Current Balance: $%.2f",
+                    account.getBalance()
+                )
+            );
+
+            balanceLabel.setVisible(true);
+        }
+        // PROCESS WITHDRAWAL
+
+        else if (event.getSource() == enterWithdrawButton) {
+
+            Number value = (Number) amountField.getValue();
+
+            if (value != null) {
+
+                double amount = value.doubleValue();
+
+                System.out.println(
+                    account.withdrawal(amount)
+                );
+
+                balanceLabel.setText(
+                    String.format("Current Balance: $%.2f",account.getBalance()));
+
+                amountField.setValue(null);
+            }
+            else {
+                balanceLabel.setText( "Please enter a withdrawal amount.");
+            }
+        }
+
+        // VIEW BALANCE
+        else if (event.getSource() == balanceButton) {
+
+            hideMainMenu();
+
+            balanceLabel.setText(
+                String.format( "Current Balance: $%.2f",account.getBalance()));
+
+            balanceLabel.setVisible(true);
+            returnButton.setVisible(true);
+        }
+        // RETURN TO MENU
+        else if (event.getSource() == returnButton) {
+
+            transactionLabel.setVisible(false);
+            amountField.setVisible(false);
+
+            enterDepositButton.setVisible(false);
+            enterWithdrawButton.setVisible(false);
+
+            balanceLabel.setVisible(false);
+            returnButton.setVisible(false);
+
+            amountField.setValue(null);
+
+            showMainMenu();
+        }
+        // EXIT
+       
+        else if (event.getSource() == exitButton) {
+            System.out.printf("Remaining account balance: $%.2f%n", account.getBalance());
+            System.exit(0);
+        }
     }
 
-    else if (event.getSource() == enterDepositButton) {
-    Number value = (Number) amountField.getValue();
+    // Hide the four main menu buttons
+    private static void hideMainMenu() {
 
-    if (value != null) {
-        double amount = value.doubleValue();
-
-        account.deposit(amount);
-
-        balanceLabel.setText(
-            String.format("Current Balance: $%.2f",account.getBalance()));
-        balanceLabel.setVisible(true);
+        depositButton.setVisible(false);
+        withdrawButton.setVisible(false);
+        balanceButton.setVisible(false);
+        exitButton.setVisible(false);
     }
-}
+    // Display the four main menu buttons
+    private static void showMainMenu() {
 
-    else if (event.getSource() == withdrawButton) {
-
-        // Show only withdrawal screen
-
+        depositButton.setVisible(true);
+        withdrawButton.setVisible(true);
+        balanceButton.setVisible(true);
+        exitButton.setVisible(true);
     }
-
-    else if (event.getSource() == balanceButton) {
-
-        // Show only balance screen
-
-    }
-
-    else if (event.getSource() == exitButton) {
-
-        // Exit/log out
-
-    }
-}
 }
