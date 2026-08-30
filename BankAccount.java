@@ -7,7 +7,7 @@ public class BankAccount {
 
     // Default constructor
     public BankAccount() {
-        balance = 0.0;
+        balance = 2500.0;
     }
     // Setters
     public void setFirstName(String firstName) {
