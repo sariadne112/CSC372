@@ -2,7 +2,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -11,7 +10,6 @@ import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.NumberFormat;
 
 public class BankGUI extends BankAccount implements ActionListener{
     private static BankAccount account;
@@ -29,7 +27,7 @@ public class BankGUI extends BankAccount implements ActionListener{
 
     // Transaction components
     private static JLabel transactionLabel;
-    private static JFormattedTextField amountField;
+    private static JTextField amountField;
     private static JButton enterDepositButton;
     private static JButton enterWithdrawButton;
     private static JButton returnButton;
@@ -116,10 +114,7 @@ public class BankGUI extends BankAccount implements ActionListener{
 
         // Transaction
         transactionLabel = new JLabel("");
-        amountField =
-            new JFormattedTextField(NumberFormat.getCurrencyInstance());
-
-        amountField.setColumns(10);
+        amountField = new JTextField(10);
         amountField.setEditable(true);
 
         enterDepositButton = new JButton("Deposit");
@@ -259,26 +254,16 @@ public class BankGUI extends BankAccount implements ActionListener{
 
         else if (event.getSource() == enterDepositButton) {
 
-            Number value = (Number) amountField.getValue();
+            try {
+                double amount = Double.parseDouble(amountField.getText());
 
-            if (value != null) {
-
-                double amount = value.doubleValue();
-
-                System.out.println(
-                    account.deposit(amount)
-                );
+                account.deposit(amount);
 
                 balanceLabel.setText(
-                    String.format("Current Balance: $%.2f",account.getBalance()));
-
-                amountField.setValue(null);
+                    String.format( "Current Balance: $%.2f",account.getBalance()));
             }
-            else {
-
-                balanceLabel.setText(
-                    "Please enter a deposit amount."
-                );
+            catch (Exception exception) {
+                balanceLabel.setText("Please enter a valid amount.");
             }
         }
         // OPEN WITHDRAW screen
@@ -303,26 +288,17 @@ public class BankGUI extends BankAccount implements ActionListener{
             balanceLabel.setVisible(true);
         }
         // PROCESS WITHDRAWAL
-
         else if (event.getSource() == enterWithdrawButton) {
 
-            Number value = (Number) amountField.getValue();
+             try {
+                double amount = Double.parseDouble(amountField.getText());
 
-            if (value != null) {
+                account.withdrawal(amount);
 
-                double amount = value.doubleValue();
+                balanceLabel.setText(String.format("Current Balance: $%.2f", account.getBalance()));
 
-                System.out.println(
-                    account.withdrawal(amount)
-                );
-
-                balanceLabel.setText(
-                    String.format("Current Balance: $%.2f",account.getBalance()));
-
-                amountField.setValue(null);
-            }
-            else {
-                balanceLabel.setText( "Please enter a withdrawal amount.");
+            } catch (Exception exception) {
+                balanceLabel.setText("Please enter a valid amount.");
             }
         }
 
@@ -349,7 +325,7 @@ public class BankGUI extends BankAccount implements ActionListener{
             balanceLabel.setVisible(false);
             returnButton.setVisible(false);
 
-            amountField.setValue(null);
+            amountField.setText("");
 
             showMainMenu();
         }
