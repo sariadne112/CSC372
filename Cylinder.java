@@ -12,7 +12,7 @@ public class Cylinder {
     return (2 * Math.PI * radius * height)
     + (2 * Math.PI * Math.pow(radius, 2));
     }
-
+  //Volume
   public double volume(){
     return Math.PI * Math.pow(radius, 2) * height;
   }
@@ -20,7 +20,7 @@ public class Cylinder {
   //To String
   @Override
     public String toString() {
-        String.format("Sphere Surface Area: %.2f%nSphere Volume: %.2f",
+        String.format("Cylinder Surface Area: %.2f%nCylinder Volume: %.2f",
         surface_area(), volume());
     }
 }
