@@ -1,11 +1,11 @@
 public class ShapeArray{
   public static void main(String[] args) {
     //Instantiate Sphere
-    Sphere sphere = new Sphere(50.0);
+    Sphere sphere = new Sphere(9.0);
     //Instantiate Cylinder
-    Cylinder cylinder = new Cylinder(50.0, 20.00);
+    Cylinder cylinder = new Cylinder(7, 15.67);
     //Instantiate Cone
-    Cone cone = new Cone(50.00, 25.00);
+    Cone cone = new Cone(8.9, 12.00);
     //Store Array
     Shape[] shapeArray = {sphere, cylinder, cone};
     //loop through
