@@ -1,4 +1,4 @@
-public class Cylinder {
+public class Cylinder extends Shape{
   private double radius;
   private double height;
 
@@ -12,7 +12,8 @@ public class Cylinder {
     return (2 * Math.PI * radius * height)
     + (2 * Math.PI * Math.pow(radius, 2));
     }
-  //Volume
+  //volume
+  @Override
   public double volume(){
     return Math.PI * Math.pow(radius, 2) * height;
   }
@@ -20,7 +21,7 @@ public class Cylinder {
   //To String
   @Override
     public String toString() {
-        String.format("Cylinder Surface Area: %.2f%nCylinder Volume: %.2f",
+        return String.format("Cylinder Surface Area: %.2f%nCylinder Volume: %.2f",
         surface_area(), volume());
     }
 }
