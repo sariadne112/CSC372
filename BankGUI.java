@@ -196,14 +196,13 @@ public class BankGUI extends BankAccount implements ActionListener{
         topFrame.setLocationRelativeTo(null);
         topFrame.setVisible(true);
    }
-
+   
     @Override
     public void actionPerformed(ActionEvent event) {
         // SIGN IN
         if (event.getSource() == signInButton) {
 
             try {
-
                 int accountID =
                     Integer.parseInt(accountField.getText());
 
@@ -220,7 +219,6 @@ public class BankGUI extends BankAccount implements ActionListener{
                         "Account " + accountID + " Signed In.");
                     // Show menu
                     showMainMenu();
-
                 }
                 else {
                     validationLabel.setText( "Invalid account number.");
@@ -234,21 +232,9 @@ public class BankGUI extends BankAccount implements ActionListener{
         }
         // OPEN Deposit screen
         else if (event.getSource() == depositButton) {
-
-            hideMainMenu();
-
-            transactionLabel.setText("Deposit amount:");
-
-            transactionLabel.setVisible(true);
-            amountField.setVisible(true);
+            showTransactionScreen("Deposit amount:");
             enterDepositButton.setVisible(true);
-            returnButton.setVisible(true);
-
-            balanceLabel.setText(
-                String.format( "Current Balance: $%.2f",account.getBalance() ));
-
-            balanceLabel.setVisible(true);
-        }
+            }
 
         // PROCESS Deposit
 
@@ -268,25 +254,9 @@ public class BankGUI extends BankAccount implements ActionListener{
         }
         // OPEN WITHDRAW screen
         else if (event.getSource() == withdrawButton) {
-
-            hideMainMenu();
-
-            transactionLabel.setText("Withdrawal amount:");
-
-            transactionLabel.setVisible(true);
-            amountField.setVisible(true);
+            showTransactionScreen("Withdrawal amount:");
             enterWithdrawButton.setVisible(true);
-            returnButton.setVisible(true);
-
-            balanceLabel.setText(
-                String.format(
-                    "Current Balance: $%.2f",
-                    account.getBalance()
-                )
-            );
-
-            balanceLabel.setVisible(true);
-        }
+            }
         // PROCESS WITHDRAWAL
         else if (event.getSource() == enterWithdrawButton) {
 
@@ -301,7 +271,6 @@ public class BankGUI extends BankAccount implements ActionListener{
                 balanceLabel.setText("Please enter a valid amount.");
             }
         }
-
         // VIEW BALANCE
         else if (event.getSource() == balanceButton) {
 
@@ -336,7 +305,23 @@ public class BankGUI extends BankAccount implements ActionListener{
             System.exit(0);
         }
     }
+    //Update Balance
+    private static void updateBalance() {
+        balanceLabel.setText(
+            String.format("Current Balance: $%.2f", account.getBalance()));
+    }
 
+    private static void showTransactionScreen(String message) {
+        hideMainMenu();
+
+        transactionLabel.setText(message);
+        transactionLabel.setVisible(true);
+        amountField.setVisible(true);
+        returnButton.setVisible(true);
+
+        updateBalance();
+        balanceLabel.setVisible(true);
+    }   
     // Hide the four main menu buttons
     private static void hideMainMenu() {
 
