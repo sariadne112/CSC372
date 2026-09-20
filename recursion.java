@@ -1,6 +1,6 @@
  import java.util.Scanner;
 public class recursion {
-   public static int multiplyNumbers(int[] numbers, int index) {
+   public static double multiplyNumbers(double[] numbers, int index) {
         // Base case
         if (index == numbers.length - 1) {
             return numbers[index];
@@ -12,18 +12,18 @@ public class recursion {
     public static void main(String[] args) {
 
         Scanner scnr = new Scanner(System.in);
-        int[] numbers = new int[5];//int 5 to loop 5 times
+        double[] numbers = new double[5];//loop 5 times
 
         System.out.println("Enter five numbers:");
 //ask for 5 numbers
         for (int i = 0; i < numbers.length; i++) {
             System.out.print("Number " + (i + 1) + ": ");
-            numbers[i] = scnr.nextInt();
+            numbers[i] = scnr.nextDouble();
         }
 
-        int product = multiplyNumbers(numbers, 0);
+        double product = multiplyNumbers(numbers, 0);
 //result of recursive method
-        System.out.println("The product of the five numbers is: " + product);
+        System.out.printf("The product of the five numbers is: %.2f%n", product);
 
         scnr.close();
     }
