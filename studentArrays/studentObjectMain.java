@@ -4,6 +4,33 @@ public class StudentObjectMain {
 
     public static void main(String[] args) {
 
+        // Create and store the 10 student objects
+        ArrayList<Student> students = createStudents();
+
+        // Display the original student list
+        System.out.println("Original Student List:");
+        printStudents(students);
+
+        // Sort the students alphabetically by name
+        SelectionSort.selectionSort(
+                students, new NameComparator());
+
+        // Display the list sorted by name
+        System.out.println("\nStudents Sorted by Name:");
+        printStudents(students);
+
+        // Sort the students by roll number
+        SelectionSort.selectionSort(
+                students, new RollNoComparator());
+
+        // Display the list sorted by roll number
+        System.out.println("\nStudents Sorted by Roll Number:");
+        printStudents(students);
+    }
+
+    // Creates an ArrayList and adds 10 Student objects
+    public static ArrayList<Student> createStudents() {
+
         ArrayList<Student> students = new ArrayList<>();
 
         students.add(new Student(2101, "Maria", "California"));
@@ -17,24 +44,11 @@ public class StudentObjectMain {
         students.add(new Student(2107, "Isabel", "New Mexico"));
         students.add(new Student(3106, "Michael", "Colorado"));
 
-        System.out.println("Original Student List:");
-        printStudents(students);
-
-        // Sort by name
-        SelectionSort.selectionSort(
-                students, new NameComparator());
-
-        System.out.println("\nStudents Sorted by Name:");
-        printStudents(students);
-
-        // Sort by roll number
-        SelectionSort.selectionSort(
-                students, new RollNoComparator());
-
-        System.out.println("\nStudents Sorted by Roll Number:");
-        printStudents(students);
+        // Return the completed student list to main
+        return students;
     }
 
+    // Loops through the ArrayList and prints each student
     public static void printStudents(ArrayList<Student> students) {
 
         for (Student student : students) {
