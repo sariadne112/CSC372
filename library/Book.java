@@ -4,7 +4,6 @@ public class Book {
   private String author;
   private String isbn;
   private int pages;
-  private int quantity;
 
     // Default constructor
     public Book() {
@@ -13,20 +12,18 @@ public class Book {
      this.author = "";
      this.isbn = "";
      this.pages = 0;
-     this.quantity = 1;
     }
 
     // Parameterized constructor
     public Book(int id, String title,
                 String author, String isbn,
-                int pages, int quantity ) {
+                int pages ) {
 
         this.id = id;
         this.title = title;
         this.author = author;
         this.isbn = isbn;
         this.pages = pages;
-        this.quantity = quantity;
     }
 
 //get ID
@@ -69,16 +66,7 @@ public int getPages() {
 public void setPages(int pages) {
     this.pages = pages;
 }
-//get quantity
-public int getQuantity() {
-    return quantity;
-}
-//set quantity
-public void setQuantity(int quantity) {
-    if (quantity >= 0) {
-        this.quantity = quantity;
-    }
-}
+
 // Print book information
     public void printBookInfo() {
         System.out.println("\n--- BOOK INFORMATION ---");
